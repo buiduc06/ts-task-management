@@ -22,6 +22,8 @@ export class ProjectList extends Component<HTMLDivElement, HTMLElement> implemen
     const prj_id = event.dataTransfer?.getData('text/plain')!;
     projectState.moveProject(prj_id, this.type === 'active' ? ProjectStatus.ACTIVE : ProjectStatus.FINISHED);
     // this.assignedProjects.push()
+    console.log('aaa');
+
   }
 
   @autobind
