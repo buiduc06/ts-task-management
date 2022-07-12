@@ -1,42 +1,39 @@
-namespace TaskManagement {
-  // Component base class
-  export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
-    templateElement: HTMLTemplateElement;
-    hostElement: T;
-    element: U;
+export default abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+  templateElement: HTMLTemplateElement;
+  hostElement: T;
+  element: U;
 
-    constructor(
-      templateId: string,
-      hostElementId: string,
-      insertAtStart: boolean,
-      newElementId?: string
-    ) {
-      this.templateElement = document.getElementById(templateId)! as HTMLTemplateElement;
+  constructor(
+    templateId: string,
+    hostElementId: string,
+    insertAtStart: boolean,
+    newElementId?: string
+  ) {
+    this.templateElement = document.getElementById(templateId)! as HTMLTemplateElement;
 
-      this.hostElement = document.getElementById(hostElementId)! as T;
+    this.hostElement = document.getElementById(hostElementId)! as T;
 
-      const inportedNode = document.importNode(
-        this.templateElement.content,
-        true
-      );
+    const inportedNode = document.importNode(
+      this.templateElement.content,
+      true
+    );
 
-      this.element = inportedNode.firstElementChild as U;
+    this.element = inportedNode.firstElementChild as U;
 
-      if (newElementId) {
-        this.element.id = newElementId;
-      }
-
-      this.attach(insertAtStart);
+    if (newElementId) {
+      this.element.id = newElementId;
     }
 
-    private attach(insertAtBeginning: boolean) {
-      this.hostElement.insertAdjacentElement(
-        insertAtBeginning ? 'afterbegin' : 'beforeend',
-        this.element
-      );
-    }
-
-    abstract configure(): void;
-    abstract renderContent(): void;
+    this.attach(insertAtStart);
   }
+
+  private attach(insertAtBeginning: boolean) {
+    this.hostElement.insertAdjacentElement(
+      insertAtBeginning ? 'afterbegin' : 'beforeend',
+      this.element
+    );
+  }
+
+  abstract configure(): void;
+  abstract renderContent(): void;
 }
